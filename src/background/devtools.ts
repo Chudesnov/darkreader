@@ -47,6 +47,7 @@ class PersistentStorageWrapper implements DevToolsStorage {
 
     public async set(key: string, value: string) {
         this.cache[key] = value;
+        // TODO: in Firefox, check for unlimitedStorage here when trying to set data and gracefully handle rejection
         return new Promise<void>((resolve) => chrome.storage.local.set({[key]: value}, () => {
             if (chrome.runtime.lastError) {
                 console.error('Failed to write DevTools data', chrome.runtime.lastError);
